@@ -1,10 +1,33 @@
 //oo in scala
-class checkSum{
+
+import scala.collection.mutable.Map
+
+class CheckSum{
     private var sum : Int = 0 
-    def add(b:Int) {sum += b}
+    def add(b:Byte) {sum += b}
     def check():Int = ~(sum & 0xFF) + 1
 }
 
-var c1 = new checkSum
-c1.add(10)
-println(c1.check())
+object CheckSum {
+    private val cache = Map[String,Int]()
+
+    def calculate(s:String) : Int = {
+        if (cache.contains(s)) {
+            cache(s)
+        } else {
+            val cc = new CheckSum
+            for (c <- s) {
+                cc.add(c.toByte)
+            }
+            val cs = cc.check()
+            cache += (s -> cs)
+            cs
+        }
+    }
+}
+
+//println(CheckSum.calculate("hello"))
+
+//println(CheckSum.calculate("hello"))
+
+
