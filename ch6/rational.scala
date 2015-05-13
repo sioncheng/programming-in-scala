@@ -21,6 +21,9 @@ class Rational (n:Int,d:Int) {
 }
 
 
+implicit def intConvertToRational(x:Int) = new Rational(x)
+
+
 val r1 = new Rational(2,1)
 
 println(r1)
@@ -36,3 +39,5 @@ println(r1 + r2 * r3)
 val r4 = new Rational(5)
 
 println(r1.+(r4))
+
+println(3 * r1)
