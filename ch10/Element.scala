@@ -20,5 +20,8 @@ class LineElement(s : String) extends ArrayElement(Array(s)){
 val arr = Array("s1","s22")
 println(arr.length)
 
-val ae = new ArrayElement(arr)
+val ae : Element = new ArrayElement(arr)
 println(ae.height + "," + ae.width)
+
+val le : Element = new LineElement("s1")
+println(le.height + "," + le.width)
