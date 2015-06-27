@@ -1,7 +1,7 @@
 abstract class Element {
 	def contents : Array[String]
-	val height = contents.length
-	val width = if (height == 0) 0 else contents(0).length
+	def height = contents.length
+	def width = if (height == 0) 0 else contents(0).length
 }
 
 class ArrayElement(conts:Array[String]) extends Element {
@@ -17,11 +17,26 @@ class LineElement(s : String) extends ArrayElement(Array(s)){
 	//override val width : Int = s.length
 }
 
+class UniformElement (
+	ch : Char,
+	override val height : Int,
+	override val width : Int
+) extends Element {
+	private val line = ch.toString * width
+	def contents : Array[String] = Array.fill(height)(line)
+}
+
+def printElement(e : Element) = println(e.height + "," + e.width)
+
+
 val arr = Array("s1","s22")
 println(arr.length)
 
 val ae : Element = new ArrayElement(arr)
-println(ae.height + "," + ae.width)
+printElement(ae)
 
 val le : Element = new LineElement("s1")
-println(le.height + "," + le.width)
+printElement(le)
+
+val ce : Element = new UniformElement('h',2,4)
+printElement(ce)
