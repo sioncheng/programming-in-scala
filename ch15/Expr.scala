@@ -1,4 +1,4 @@
-abstract class Expr
+sealed abstract class Expr //require the sub classes in the same file
 
 case class Var(name: String) extends Expr
 case class Number(num: Double) extends Expr
@@ -77,3 +77,29 @@ def generalSizeFunc(x:Any) = {
 	}
 }
 println(generalSizeFunc(List(1,2)))
+
+def describeExpr(e:Expr) : String = (e: @unchecked) match {
+	case Number(_) => "number"
+	case Var(_) => "variable"
+	//case _ => throw new RuntimeException 
+}
+
+println(describeExpr(Var("y")))
+
+val abs = UnOp("abs",UnOp("abs",Var("1")))
+
+//variable binding
+val e = abs match {
+	case UnOp("abs", e @ UnOp("abs",_)) => e
+	case _ => 
+}
+
+println(e)
+
+//patterns everywhere
+val UnOp(left,right) = e
+println(left)
+println(right)
+
+val Var(n) = right
+println(n)
