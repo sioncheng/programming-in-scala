@@ -32,3 +32,12 @@ def append[T](xs : List[T], ys : List[T]) : List[T] = xs match {
 }
 
 println(iSort(append(ll,lll)))
+
+println(ll.map(_ + 1))
+
+var words = List("what", "are", "you", "doing", "?")
+println(words map (_.length))
+println(words.map(_.toList))
+
+println(("" /: words)(_ + " " + _))
+println((words.head /: words.tail)(_ + " " + _))
