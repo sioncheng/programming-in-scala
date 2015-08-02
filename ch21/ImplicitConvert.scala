@@ -11,7 +11,7 @@ implicit def doubleToInt(d: Double) = d.toInt
 val d : Int = 3.5 //type conversion
 println(d)
 
-class Rational(n: Int, d: Int) {
+class Rational(n: Int, d: Int) extends Ordered[Rational] {
 	require(d != 0)
 
     val numberArg : Int = n
@@ -26,6 +26,13 @@ class Rational(n: Int, d: Int) {
 
     def * (that : Rational) : Rational = {
         new Rational(this.number * that.number, this.denom * that.denom)
+    }
+
+    override def compare(that : Rational) = {
+    	println("compare called")
+    	println(this)
+    	println(that)
+    	(this.number*that.denom)-(that.number*that.denom)
     }
 
 	lazy val number = numberArg / g
@@ -50,3 +57,17 @@ println(half)
 implicit def intToRational(x:Int) : Rational = new Rational(x)
 
 println(half + 2) //type conversion
+
+def maxListImplicitParam[T] (elements:List[T]) (implicit orderer: T => Ordered[T]) : T = {
+	elements match {
+		case List() => throw new IllegalArgumentException("empty list!")
+		case List(x) => x
+		case x :: rest => 
+			val maxRest = maxListImplicitParam(rest)(orderer)
+			if (x > maxRest) x else maxRest
+	}
+}
+
+println(maxListImplicitParam(List(2,45,13,4)))
+
+println(maxListImplicitParam(List(new Rational(1,2),new Rational(3,4),new Rational(4,5))))
